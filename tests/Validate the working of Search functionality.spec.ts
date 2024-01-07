@@ -7,7 +7,7 @@ const countTextLocater = '//*[@id="main-content"]/div/div/div[1]/div/div/div[2]/
 const filterLocater = '//*[@id="filter"]';
 const searchButtonLocater = '//*[@id="main-content"]/div/div/div/div/div[1]/div/div/div[1]/div[1]/div/div/form/button'
 
-// test case 1: Validate searching with an existing Keyword
+// test case 1: Validate searching with an existing Keyword(UI Automation)
 
   test('Validate searching with an existing Keyword', async ({ page }) => {
 
@@ -26,7 +26,7 @@ const searchButtonLocater = '//*[@id="main-content"]/div/div/div/div/div[1]/div/
     await expect(page.locator(filterLocater)).toBeVisible();
   });
 
-  //test case 2 : Validate searching without typing anything
+  //test case 2 : Validate searching without typing anything(UI Automation)
   test('Validate searching without typing anything', async ({ page }) => {
 
     await page.goto('https://onlinelibrary.wiley.com/');
