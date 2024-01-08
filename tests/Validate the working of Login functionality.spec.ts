@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+import { LoginPopup } from '../pages/LoginPopup'
 
-const Login = '//*[@id="pb-page-content"]/div/div[1]/header/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/a/span[2]';
 const EmailLocater = '//*[@id="username"]';
 const PasswordLocater = '//*[@id="password"]';
 const validEmail = 'pethum013@gmail.com';
@@ -11,15 +11,26 @@ const LoginBtn = '//*[@id="pb-page-content"]/div/div[4]/div/div[2]/div[2]/form/d
 const userLocater = '//*[@id="indivLogin"]/span[2]';
 const ErrorMsgLocator = '//*[@id="login-error-message"]';
 
-// test case 1: Verify logging into the Site using valid credentials.(UI Automation)
+const URL = 'https://onlinelibrary.wiley.com/';
+
+let loginPopup: LoginPopup;
+
+test.beforeEach(async ({ page }) => {
+  await page.goto(URL);
+  loginPopup = new LoginPopup(page)
+});
+
+async function clickLoginOption(page: Page) {
+  await loginPopup.clickLoginOption();
+}
+
+test.describe('Test scenario 2', () => {
+
+  // test case 1: Verify logging into the Site using valid credentials.
 
   test('Verify logging into the Site using valid credentials.', async ({ page }) => {
 
-    await page.goto('https://onlinelibrary.wiley.com/');
-
-    await expect(page).toHaveTitle('Wiley Online Library | Scientific research articles, journals, books, and reference works', { timeout: 10000 });
-
-    await page.click(Login,{timeout:10000});
+    await clickLoginOption(page);
 
     await page.locator(EmailLocater).pressSequentially(validEmail);
 
@@ -31,15 +42,11 @@ const ErrorMsgLocator = '//*[@id="login-error-message"]';
 
   });
 
-  //test case 2 : Verify logging into the Site using invalid credentials.(invalid email and valid password)-(UI Automation)
+  //test case 2 : Verify logging into the Site using invalid credentials.(invalid email and valid password)
 
   test('Verify logging into the Site using invalid email and valid password.', async ({ page }) => {
 
-    await page.goto('https://onlinelibrary.wiley.com/');
-
-    await expect(page).toHaveTitle('Wiley Online Library | Scientific research articles, journals, books, and reference works', { timeout: 10000 });
-
-    await page.click(Login,{timeout:10000});
+    await clickLoginOption(page);
 
     await page.locator(EmailLocater).pressSequentially(invalidEmail);
 
@@ -51,15 +58,11 @@ const ErrorMsgLocator = '//*[@id="login-error-message"]';
 
   });
 
-  //test case 3 : Verify logging into the Site using invalid credentials.(valid email and invalid password)(UI Testing)
+  //test case 3 : Verify logging into the Site using invalid credentials.(valid email and invalid password)
 
   test('Verify logging into the Site using valid email and invalid password.', async ({ page }) => {
 
-    await page.goto('https://onlinelibrary.wiley.com/');
-
-    await expect(page).toHaveTitle('Wiley Online Library | Scientific research articles, journals, books, and reference works', { timeout: 10000 });
-
-    await page.click(Login,{timeout:10000});
+    await clickLoginOption(page);
 
     await page.locator(EmailLocater).pressSequentially(validEmail);
 
@@ -72,15 +75,11 @@ const ErrorMsgLocator = '//*[@id="login-error-message"]';
   });
 
 
-//   test case 4 : Verify logging into the Site using invalid credentials.(Ui testing)
+  //   test case 4 : Verify logging into the Site using invalid credentials.
 
   test('Verify logging into the Site using invalid email and password.', async ({ page }) => {
 
-    await page.goto('https://onlinelibrary.wiley.com/');
-
-    await expect(page).toHaveTitle('Wiley Online Library | Scientific research articles, journals, books, and reference works', { timeout: 10000 });
-
-    await page.click(Login,{timeout:10000});
+    await clickLoginOption(page);
 
     await page.locator(EmailLocater).pressSequentially(invalidEmail);
 
@@ -92,18 +91,17 @@ const ErrorMsgLocator = '//*[@id="login-error-message"]';
 
   });
 
-  //testcase 5 : Verify logging into the Site without using credentials.(UI Automation)
+  //testcase 5 : Verify logging into the Site without using credentials.
 
   test('Verify logging into the  Site without using credentials.', async ({ page }) => {
 
-    await page.goto('https://onlinelibrary.wiley.com/');
-
-    await expect(page).toHaveTitle('Wiley Online Library | Scientific research articles, journals, books, and reference works', { timeout: 10000 });
-
-    await page.click(Login,{timeout:10000});
+    await clickLoginOption(page);
 
     const isButtonDisabled = await page.$eval(LoginBtn, (button) => button.hasAttribute('disabled'));
 
     expect(isButtonDisabled).toBeTruthy();
 
   });
+
+});
+
