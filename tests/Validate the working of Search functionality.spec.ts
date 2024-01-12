@@ -9,7 +9,7 @@ const searchButtonLocater = '//*[@id="main-content"]/div/div/div/div/div[1]/div/
 
 const URL = 'https://onlinelibrary.wiley.com/';
 
-test.describe.only('Test scenario 3', () => {
+test.describe('Test scenario 3', () => {
   // test case 1: Validate searching with an existing Keyword
 
   test('Validate searching with an existing Keyword', async ({ page }) => {

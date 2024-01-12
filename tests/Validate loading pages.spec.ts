@@ -25,7 +25,7 @@ test.describe('Test scenario 1', () => {
         await expect(page.locator('//*[@id="main-content"]/div/div/div[1]/div/div/div/div[1]/div[1]/h1')).toHaveText('Register');
 
         const currentUrl = page.url();
-        expect(currentUrl).toBe('https://onlinelibrary.wiley.com/action/registration');
+        expect(currentUrl).toBe('https://onlinelibrary.wiley.com/action/registration?acdl-redirect=true');
     });
 
     // test case 1: Validate Register page loading
@@ -38,7 +38,7 @@ test.describe('Test scenario 1', () => {
         await expect(page.locator('//*[@id="main-content"]/div/div/div[2]/div/div/div/div[1]/h1')).toHaveText('Institutional Login');
 
         const currentUrl = page.url();
-        expect(currentUrl).toBe('https://onlinelibrary.wiley.com/action/ssostart');
+        expect(currentUrl).toBe('https://onlinelibrary.wiley.com/action/ssostart?redirectUri=%2F');
 
     });
 })
